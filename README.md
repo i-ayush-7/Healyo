@@ -1,6 +1,6 @@
 ﻿# Healyo
 
-Healyo is a multi-agent AI wellness companion built for the GNEC Hackathon theme:
+Healyo is a multi-agent AI wellness companion:
 United Nations Sustainable Development Goal 3, Health and Well-being.
 
 The platform combines a playful wellness companion with practical health-support
