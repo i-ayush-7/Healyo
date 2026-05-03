@@ -1,0 +1,9 @@
+{
+  "name": "healyo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI wellness companion for the GNEC Hackathon SDG 3 theme.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Healyo | Multi-Agent Wellness Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true">
+      <span class="spark spark-a"></span>
+      <span class="spark spark-b"></span>
+      <span class="spark spark-c"></span>
+      <span class="spark spark-d"></span>
+    </div>
+
+    <div class="app-shell">
+      <button class="drawer-toggle" id="drawerToggle" type="button" aria-label="Toggle sidebar" aria-expanded="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <aside class="sidebar" aria-label="Healyo navigation">
+        <a class="brand" href="#home" data-screen-link="home" aria-label="Healyo home">
+          <span class="brand-mark">H</span>
+          <span>
+            <strong>Healyo</strong>
+            <small>AI Care Team</small>
+          </span>
+        </a>
+        <nav class="side-nav">
+          <button class="nav-item active" type="button" data-screen-link="home">Home</button>
+          <button class="nav-item" type="button" data-screen-link="track">Track</button>
+          <button class="nav-item" type="button" data-screen-link="care">Care</button>
+          <button class="nav-item" type="button" data-screen-link="agents">AI Team</button>
+          <button class="nav-item" type="button" data-screen-link="triage">Triage</button>
+          <button class="nav-item" type="button" data-screen-link="timeline">Timeline</button>
+          <button class="nav-item" type="button" data-screen-link="report">Report</button>
+          <button class="nav-item" type="button" data-screen-link="impact">Impact</button>
+          <button class="nav-item" type="button" data-screen-link="settings">Settings</button>
+        </nav>
+        <div class="side-status">
+          <span id="aiMode">Local AI</span>
+          <strong id="todayScore">0%</strong>
+          <small>today score</small>
+        </div>
+      </aside>
+
+      <main class="app-main">
+        <header class="mobile-topbar">
+          <a class="brand" href="#home" data-screen-link="home" aria-label="Healyo home">
+            <span class="brand-mark">H</span>
+            <span>
+              <strong>Healyo</strong>
+              <small>Multi-agent health support</small>
+            </span>
+          </a>
+          <select id="mobileScreenSelect" aria-label="Choose screen">
+            <option value="home">Home</option>
+            <option value="track">Track</option>
+            <option value="care">Care</option>
+            <option value="agents">AI Team</option>
+            <option value="triage">Triage</option>
+            <option value="timeline">Timeline</option>
+            <option value="report">Report</option>
+            <option value="impact">Impact</option>
+            <option value="settings">Settings</option>
+          </select>
+        </header>
+
+        <section class="screen active" id="screen-home" aria-labelledby="home-title">
+          <div class="hero screen-hero">
+            <div class="hero-copy">
+              <p class="eyebrow">SDG 3 multi-agent companion</p>
+              <h1 id="home-title">Take care of yourself. Watch Healyo thrive.</h1>
+              <p class="hero-text">
+                Healyo combines a playful companion with specialized AI agents for
+                triage, mind care, movement, nutrition, medication, caregiver reports,
+                and pattern insights.
+              </p>
+              <div class="hero-actions">
+                <button class="primary-action" type="button" data-screen-link="agents">Meet the AI Team</button>
+                <button class="secondary-action" type="button" data-screen-link="triage">Run safe triage</button>
+              </div>
+              <div class="hero-stat-row" aria-label="Today summary">
+                <span><strong id="entryCount">0</strong> saved entries</span>
+                <span><strong id="openMedCount">0</strong> open meds</span>
+                <span><strong id="riskLevelLabel">Low</strong> risk signal</span>
+              </div>
+            </div>
+
+            <section class="pet-stage" aria-label="Healyo companion status">
+              <div class="status-strip">
+                <span id="petMoodLabel">Curious</span>
+                <span id="streakLabel">0 day streak</span>
+              </div>
+              <div class="pet-world">
+                <div class="sun"></div>
+                <div class="cloud cloud-one"></div>
+                <div class="cloud cloud-two"></div>
+                <div class="pet-shadow"></div>
+                <div class="pet" id="pet">
+                  <div class="accessory" id="petAccessory"></div>
+                  <div class="ear left-ear"></div>
+                  <div class="ear right-ear"></div>
+                  <div class="face">
+                    <span class="eye left-eye"></span>
+                    <span class="eye right-eye"></span>
+                    <span class="cheek left-cheek"></span>
+                    <span class="cheek right-cheek"></span>
+                    <span class="mouth"></span>
+                  </div>
+                  <div class="belly">
+                    <span id="petLevel">1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="meter-grid">
+                <div class="meter">
+                  <span>Physical</span>
+                  <div><i id="physicalBar"></i></div>
+                </div>
+                <div class="meter">
+                  <span>Mental</span>
+                  <div><i id="mentalBar"></i></div>
+                </div>
+                <div class="meter">
+                  <span>Emotional</span>
+                  <div><i id="emotionalBar"></i></div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section class="quick-grid">
+            <article class="panel">
+              <p class="eyebrow">Daily quests</p>
+              <h2>Personalized by Healyo</h2>
+              <div class="quest-list" id="questList"></div>
+              <button class="wide-action" id="refreshQuests" type="button">Refresh quests</button>
+            </article>
+            <article class="panel">
+              <p class="eyebrow">Pattern insight</p>
+              <h2>What Healyo noticed</h2>
+              <p class="ai-output" id="weeklySummary">Start logging to unlock insights.</p>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-track" aria-labelledby="track-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Physical, mental, emotional</p>
+            <h1 id="track-title">Track the habits that change your day.</h1>
+          </div>
+          <section class="feature-grid">
+            <article class="panel checkin-panel">
+              <p class="eyebrow">Mood check-in</p>
+              <h2>How are you feeling?</h2>
+              <div class="mood-options" role="group" aria-label="Mood selection">
+                <button class="mood-btn active" type="button" data-mood="low">Low</button>
+                <button class="mood-btn" type="button" data-mood="stressed">Stressed</button>
+                <button class="mood-btn" type="button" data-mood="okay">Okay</button>
+                <button class="mood-btn" type="button" data-mood="great">Great</button>
+              </div>
+              <label class="journal-label" for="journalInput">Journal note</label>
+              <textarea id="journalInput" rows="5" placeholder="Tell Healyo what today feels like..."></textarea>
+              <button class="wide-action" id="reflectBtn" type="button">Save and reflect</button>
+              <p class="ai-output" id="reflectionOutput">Share a note and Healyo will reflect it back with one kind next step.</p>
+            </article>
+
+            <article class="panel tracker-panel">
+              <div class="panel-heading row-heading">
+                <div>
+                  <p class="eyebrow">Hydration</p>
+                  <h2>Water glasses</h2>
+                </div>
+                <strong id="waterLabel">0 / 8</strong>
+              </div>
+              <div class="stepper">
+                <button type="button" data-action="waterDown">-</button>
+                <div class="ring"><span id="waterPercent">0%</span></div>
+                <button type="button" data-action="waterUp">+</button>
+              </div>
+            </article>
+
+            <article class="panel tracker-panel">
+              <p class="eyebrow">Movement</p>
+              <h2>Active minutes</h2>
+              <input class="range" id="movementInput" type="range" min="0" max="120" step="5" />
+              <p class="metric-line"><strong id="movementLabel">0 min</strong> logged today</p>
+            </article>
+
+            <article class="panel tracker-panel">
+              <p class="eyebrow">Sleep</p>
+              <h2>Last night</h2>
+              <input class="range" id="sleepInput" type="range" min="0" max="12" step="0.5" />
+              <p class="metric-line"><strong id="sleepLabel">0 hours</strong> of sleep</p>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-care" aria-labelledby="care-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Care tools</p>
+            <h1 id="care-title">Medication, symptoms, calm, and support.</h1>
+          </div>
+          <section class="feature-grid">
+            <article class="panel">
+              <p class="eyebrow">Medication</p>
+              <h2>Reminder list</h2>
+              <form class="stack-form" id="medForm">
+                <input id="medName" type="text" placeholder="Medicine name" required />
+                <div class="two-col">
+                  <input id="medDose" type="text" placeholder="Dose" required />
+                  <input id="medTime" type="time" required />
+                </div>
+                <button type="submit">Add medicine</button>
+              </form>
+              <div class="mini-list" id="medList"></div>
+            </article>
+
+            <article class="panel">
+              <p class="eyebrow">Symptoms</p>
+              <h2>Wellness log</h2>
+              <form class="stack-form" id="symptomForm">
+                <input id="symptomName" type="text" placeholder="Headache, anxiety, fatigue..." required />
+                <label class="compact-label">
+                  Severity <span id="severityLabel">3</span>/10
+                  <input id="severityInput" class="range" type="range" min="1" max="10" value="3" />
+                </label>
+                <input id="symptomNote" type="text" placeholder="Optional note" />
+                <button type="submit">Log symptom</button>
+              </form>
+              <div class="mini-list" id="symptomList"></div>
+            </article>
+
+            <article class="panel calm-panel">
+              <p class="eyebrow">Mental reset</p>
+              <h2>Guided breathing</h2>
+              <div class="breath-circle" id="breathCircle">
+                <span id="breathText">Ready</span>
+              </div>
+              <div class="button-row">
+                <button type="button" id="breathBtn">Start 60s</button>
+                <button type="button" id="groundingBtn">Grounding</button>
+              </div>
+              <p class="ai-output small-output" id="calmOutput">Use this when stress feels loud. Healyo will guide one short reset.</p>
+            </article>
+
+            <article class="panel support-panel">
+              <p class="eyebrow">Support mode</p>
+              <h2>I need help now</h2>
+              <p class="support-copy">If you may be in immediate danger, contact local emergency services now. Healyo can also show your saved support contact and grounding steps.</p>
+              <button class="danger-action" id="supportBtn" type="button">Open support card</button>
+              <div class="support-card" id="supportCard" hidden>
+                <strong id="supportContact">No contact saved</strong>
+                <p>Reach out to a trusted person, move to a safer place if possible, and take one slow breath while help is contacted.</p>
+              </div>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-agents" aria-labelledby="agents-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Multi-agent AI</p>
+            <h1 id="agents-title">A care team, not just a chatbot.</h1>
+          </div>
+          <section class="agent-layout">
+            <div class="agent-grid" id="agentGrid"></div>
+            <article class="panel agent-console">
+              <div class="row-heading">
+                <div>
+                  <p class="eyebrow" id="activeAgentRole">Mind Coach</p>
+                  <h2 id="activeAgentName">Mind Coach Agent</h2>
+                </div>
+                <button class="small-action" id="agentPlanBtn" type="button">Use context</button>
+              </div>
+              <div class="chat-window tall-chat" id="agentChatWindow" aria-live="polite">
+                <div class="message pet-message">Choose an agent, then ask for specialized support.</div>
+              </div>
+              <form class="chat-form" id="agentForm">
+                <input id="agentInput" type="text" placeholder="Ask this agent..." autocomplete="off" />
+                <button type="submit">Ask</button>
+              </form>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-triage" aria-labelledby="triage-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Safe symptom guidance</p>
+            <h1 id="triage-title">Triage without pretending to diagnose.</h1>
+          </div>
+          <section class="triage-layout">
+            <article class="panel">
+              <p class="eyebrow">Symptom check</p>
+              <h2>Describe what is happening</h2>
+              <textarea id="triageInput" rows="6" placeholder="Example: headache for 2 days, severity 7, slept 4 hours..."></textarea>
+              <label class="compact-label">
+                Severity <span id="triageSeverityLabel">5</span>/10
+                <input id="triageSeverity" class="range" type="range" min="1" max="10" value="5" />
+              </label>
+              <button class="wide-action" id="triageBtn" type="button">Run triage</button>
+            </article>
+            <article class="panel triage-result" id="triageResult">
+              <p class="eyebrow">Result</p>
+              <h2>Ready when you are</h2>
+              <p class="ai-output">Healyo will look for urgency signals, explain what it noticed, and suggest a safe next step.</p>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-timeline" aria-labelledby="timeline-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Health timeline</p>
+            <h1 id="timeline-title">Your logs become a story you can use.</h1>
+          </div>
+          <section class="timeline-layout">
+            <article class="panel">
+              <p class="eyebrow">Filters</p>
+              <h2>Timeline</h2>
+              <div class="button-row">
+                <button type="button" data-filter="all" class="timeline-filter active">All</button>
+                <button type="button" data-filter="symptom" class="timeline-filter">Symptoms</button>
+                <button type="button" data-filter="journal" class="timeline-filter">Journal</button>
+                <button type="button" data-filter="med" class="timeline-filter">Meds</button>
+              </div>
+            </article>
+            <article class="panel timeline-panel">
+              <div id="timelineList" class="timeline-list"></div>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-report" aria-labelledby="report-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Caregiver and doctor summary</p>
+            <h1 id="report-title">A clean report from daily logs.</h1>
+          </div>
+          <section class="report-layout">
+            <article class="panel">
+              <p class="eyebrow">Report builder</p>
+              <h2>Generate a shareable summary</h2>
+              <button class="wide-action" id="reportBtn" type="button">Generate report</button>
+              <button class="wide-action" id="copyReportBtn" type="button">Copy report</button>
+            </article>
+            <article class="panel report-card">
+              <pre id="careReport">Generate a report to summarize symptoms, medications, mood, sleep, movement, hydration, and safe next steps.</pre>
+            </article>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-impact" aria-labelledby="impact-title">
+          <div class="screen-heading">
+            <p class="eyebrow">SDG 3 impact</p>
+            <h1 id="impact-title">Why Healyo matters.</h1>
+          </div>
+          <section class="impact-grid">
+            <article class="insight"><span class="insight-icon">PREV</span><strong>Preventive care</strong><p>Turns small daily actions into visible health routines.</p></article>
+            <article class="insight"><span class="insight-icon">MIND</span><strong>Mental health</strong><p>Provides breathing, grounding, journaling, and context-aware support.</p></article>
+            <article class="insight"><span class="insight-icon">MED</span><strong>Adherence</strong><p>Tracks medication reminders and missed-dose patterns.</p></article>
+            <article class="insight"><span class="insight-icon">SAFE</span><strong>Safety</strong><p>Flags urgent symptoms and encourages real professional help when needed.</p></article>
+          </section>
+          <article class="panel">
+            <p class="eyebrow">Pitch line</p>
+            <h2>Hackathon positioning</h2>
+            <p class="ai-output">Healyo is a multi-agent AI wellness companion that helps users track physical, mental, and emotional health, identify early patterns, manage medication routines, and generate safe care summaries for caregivers or professionals through a playful companion experience.</p>
+          </article>
+        </section>
+
+        <section class="screen" id="screen-settings" aria-labelledby="settings-title">
+          <div class="screen-heading">
+            <p class="eyebrow">Personalization</p>
+            <h1 id="settings-title">Make Healyo yours.</h1>
+          </div>
+          <section class="profile-band" aria-label="Profile and goals">
+            <form class="profile-form" id="profileForm">
+              <label>
+                Name
+                <input id="nameInput" type="text" placeholder="Your name" />
+              </label>
+              <label>
+                Main goal
+                <select id="goalInput">
+                  <option value="reduce stress">Reduce stress</option>
+                  <option value="sleep better">Sleep better</option>
+                  <option value="move more">Move more</option>
+                  <option value="drink more water">Drink more water</option>
+                  <option value="build routine">Build routine</option>
+                </select>
+              </label>
+              <label>
+                Daily water goal
+                <input id="waterGoalInput" type="number" min="2" max="16" />
+              </label>
+              <label>
+                Emergency contact
+                <input id="contactInput" type="text" placeholder="Name / phone" />
+              </label>
+              <button type="submit">Save profile</button>
+            </form>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
